@@ -8,9 +8,8 @@ a {
 }
 
 .canvas-container {
-  position: relative;
 }
 
 #drawingSpace {
-
+  border:1px #afafaf solid;
 }
