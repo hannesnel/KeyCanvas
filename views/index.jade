@@ -1,7 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  hr
+  div.btn-toolbar(role="toolbar")
+  div.btn-group(data-toggle="buttons")
+    label.btn.btn-primary(aria-label="Rectangle")
+      label.glyphicon.glyphicon-stop
+      input(type="radio",name="drawShape",id="shapeRectangle",autocomplete="off",checked)
+    label.btn.btn-primary(aria-label="Circle")
+      label.glyphicon.glyphicon-record
+      input(type="radio",name="drawShape",id="shapeCircle",autocomplete="off")
   div.canvasContainer
     canvas#drawingSpace

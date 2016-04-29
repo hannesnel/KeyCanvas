@@ -2,9 +2,18 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/css/keycanvas.css')
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no")
     script(type='text/javascript', src='/js/libs/jquery-2.2.3.min.js')
+    script(type='text/javascript', src='/js/libs/bootstrap.min.js')
     script(type='text/javascript', src='/js/jquery.keycanvas.js')
     script(type='text/javascript', src='/js/keycanvas.js')
+    
+    link(rel='stylesheet', href='/css/keycanvas.css')
+    link(rel='stylesheet', href='/css/bootstrap.css')
   body
+    nav.navbar.navbar-inverse.navbar-fixed-top
+      div.container
+        div.navbar-header
+          a.navbar-brand(href="#")= title
     block content
