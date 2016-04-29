@@ -11,4 +11,12 @@ $(document).ready(function() {
   $("#shapeCircle").change(function() {
     kc.setShapeType(1);
   });
+  
+  $("#colorGreen").change(function() {
+    kc.setColor("#00AA00");
+  });
+  
+  $("#colorBlue").change(function() {
+    kc.setColor("#0000AA");
+  });
 });

@@ -5,9 +5,17 @@ block content
   div.btn-group(data-toggle="buttons")
     label.btn.btn-primary(aria-label="Rectangle")
       label.glyphicon.glyphicon-stop
-      input(type="radio",name="drawShape",id="shapeRectangle",autocomplete="off",checked)
+      input(type="radio",name="drawShape",id="shapeRectangle",autocomplete="off",checked="checked")
     label.btn.btn-primary(aria-label="Circle")
       label.glyphicon.glyphicon-record
       input(type="radio",name="drawShape",id="shapeCircle",autocomplete="off")
+      
+  div.btn-group(data-toggle="buttons")
+    label.btn.btn-primary(aria-label="Green")
+      input(type="radio",name="drawColor",id="colorGreen",autocomplete="off",checked="checked")
+      | Green 
+    label.btn.btn-primary(aria-label="Blue")
+      input(type="radio",name="drawColor",id="colorBlue",autocomplete="off")
+      | Blue
   div.canvasContainer
     canvas#drawingSpace

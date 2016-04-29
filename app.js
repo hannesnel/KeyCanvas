@@ -3,6 +3,14 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
 
+/*var loki = require('lokijs');
+var db=new loki('hello.json');
+var dorks = db.addCollection('dorks');
+dorks.insert({name:"dork1"});
+var d = dorks.data;
+console.log(d);
+db.saveDatabase();*/
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 

@@ -137,6 +137,10 @@ var KeyCanvas = KeyCanvas || (function ($) {
 			this.currentShapeType = shapeType;
 		};
 		
+		keyCanvas.prototype.setColor = function(color) {
+			this.drawColor = color;
+		};
+		
 		keyCanvas.prototype.getMouse = function(e) {
       var offsetX = 0, 
 					offsetY = 0,
@@ -174,6 +178,22 @@ var KeyCanvas = KeyCanvas || (function ($) {
 					}
 				}
 			}
+			this.invalidate();
+		},this));
+		
+		objCanvas.on('focusout',$.proxy(function(){
+			this.selectedShape = null;
+			selectedShape = null;
+			this.dragging = false;
+			this.resizing = false;
+			this.invalidate();
+		},this));
+		
+		objCanvas.on('contextmenu',$.proxy(function(){
+			this.selectedShape = null;
+			selectedShape = null;
+			this.dragging = false;
+			this.resizing = false;
 			this.invalidate();
 		},this));
 		
@@ -331,7 +351,7 @@ var KeyCanvas = KeyCanvas || (function ($) {
 	}
 		
 	keyCanvas.prototype.addShape = function(left,top,width,height,fillColor) {
-		var shape = new Shape(left,top,width,height,fillColor,this.currentShapeType);
+		var shape = new Shape(left,top,width,height,this.drawColor,this.currentShapeType);
 		shapes.push(shape);
 		this.invalidate();
 	};
