@@ -1,6 +1,6 @@
 $(document).ready(function() {
   var kc = new KeyCanvas("#drawingSpace",{
-    width:400,
+    width:600,
     height:400
   });
   

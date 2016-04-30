@@ -7,9 +7,17 @@ a {
   color: #00B7FF;
 }
 
-.canvas-container {
+.canvasContainer {
+  overflow: auto;
+  border:1px #afafaf solid;
+  padding: 10px;
 }
 
 #drawingSpace {
   border:1px #afafaf solid;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  box-shadow: 10px 10px 5px #888888;
+  outline: 0;
 }

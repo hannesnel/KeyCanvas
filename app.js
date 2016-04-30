@@ -11,6 +11,14 @@ var d = dorks.data;
 console.log(d);
 db.saveDatabase();*/
 
+/*var user = require('./models/user');
+var theUser = user.getByEmail('nel.jpj@gmail.com');
+console.log(theUser);
+
+var encUser = new user.user('frikkie@email.cc','frikkie','van','geelkatkos');
+console.log(encUser);
+*/
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
