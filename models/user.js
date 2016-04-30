@@ -2,7 +2,7 @@ var bcrypt = require('bcrypt');
 
 var salt = bcrypt.genSaltSync(8);
 
-module.exports = (function() {
+module.exports = function(loki) {
   function user(email,firstname,lastname, password) {
     this.email = email;
     this.firstname = firstname;
@@ -33,4 +33,4 @@ module.exports = (function() {
     getByEmail: getByEmail,
     authenticate: authenticate 
   };
-}());
+};
