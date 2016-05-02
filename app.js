@@ -2,28 +2,55 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
+var flash = require('connect-flash');
+var expressSession = require('express-session');
+var loki = require('lokijs');
 
-/*var loki = require('lokijs');
-var db=new loki('hello.json');
-var dorks = db.addCollection('dorks');
-dorks.insert({name:"dork1"});
-var d = dorks.data;
-console.log(d);
-db.saveDatabase();*/
+var db = new loki('keycanvas.json');
 
-/*var user = require('./models/user');
-var theUser = user.getByEmail('nel.jpj@gmail.com');
-console.log(theUser);
+var userCollection = db.addCollection('user','email');
+var canvasCollection = db.addCollection('canvasDocument');
+db.saveDatabase();
 
-var encUser = new user.user('frikkie@email.cc','frikkie','van','geelkatkos');
-console.log(encUser);
-*/
+var users = require('./models/user')(db);
+var canvasDocuments = require('./models/canvasDocument')(db);
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var passport = require('passport'), 
+    LocalStrategy = require('passport-local').Strategy;
+passport.use(new LocalStrategy(
+  function(email, password, done) {
+    users.getByEmail(email, function(err, user){
+      if (err) { 
+        return done(err); 
+      }
+      
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      
+      return done(null, user);
+    });
+  }
+));
 
 var app = express();
 
+app.use(expressSession({
+  secret: 'K3yC@nvA$',
+  resave: true,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+var routes = require('./routes/index')(passport, users, canvasDocuments);
+
+app.use(flash());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
@@ -33,7 +60,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

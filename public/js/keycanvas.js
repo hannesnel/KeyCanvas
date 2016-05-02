@@ -122,6 +122,7 @@ var KeyCanvas = KeyCanvas || (function ($) {
 		this.selectedOffsetY = 0;
 		this.expectResize = -1;
 		this.currentShapeType = 0;
+		this.isDirty = false;
 		
 		objCanvas.on('selectstart', function() {return false});
 		
@@ -181,6 +182,7 @@ var KeyCanvas = KeyCanvas || (function ($) {
 					var index = shapes.indexOf(this.selectedShape);
 					if(index>-1) {
 						shapes.splice(index,1);
+						this.isDirty = true;
 					}
 				}
 			}
@@ -258,6 +260,7 @@ var KeyCanvas = KeyCanvas || (function ($) {
 			if(this.dragging) {
 				this.selectedShape.left = mouse.x - this.selectedOffsetX;
 				this.selectedShape.top = mouse.y - this.selectedOffsetY;
+				this.isDirty = true;
 				this.invalidate();
 			}
 			else if(this.resizing) {
@@ -301,7 +304,7 @@ var KeyCanvas = KeyCanvas || (function ($) {
 					this.selectedShape.height = mouse.y - oldTop;
 					break;
 				}
-				
+				this.isDirty = true;
 				this.invalidate();
 			}
 			
@@ -364,10 +367,20 @@ var KeyCanvas = KeyCanvas || (function ($) {
 		this.height = this.canvas.height;
 		this.ghostCanvas.height=this.height;
 		this.ghostCanvas.width=this.width;
+		this.isDirty = false;
+	};
+	
+	keyCanvas.prototype.getCanvas = function() {
+		return {
+			width: this.width,
+			height: this.height,
+			design: shapes
+		};
 	};
 	
 	keyCanvas.prototype.addShape = function(left,top,width,height,fillColor,shapeType) {
 		var shape = new Shape(left,top,width,height,fillColor,shapeType);
+		this.isDirty = true;
 		shapes.push(shape);
 		this.invalidate();
 	};

@@ -1,5 +1,5 @@
 {
-  "name": "KeyCanvas",
+  "name": "keycanvas",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -11,7 +11,11 @@
     "express": "~4.13.1",
     "jade": "~1.11.0",
     "serve-favicon": "~2.3.0",
-    "lokijs":"*",
-    "bcrypt":"*"
+    "lokijs": "*",
+    "bcrypt": "*",
+    "passport": "*",
+    "passport-local": "*", 
+    "express-session": "*",
+    "connect-flash" : "*"
   }
 }

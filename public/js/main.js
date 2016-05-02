@@ -26,9 +26,21 @@ $(document).ready(function() {
         height;
     width = $("#width").val();
     height = $("#height").val();
-    kc.newCanvas({
-      width: width,
-      height: height
-    });
+    if(!kc.isDirty) {
+      kc.newCanvas({
+        width: width,
+        height: height
+      });
+      $('#newModal').modal('hide')
+    }
+    else {
+      if(window.confirm("You have unsaved changes.\nClick OK if you are fine with loosing your changes, or click cancel to go back and save.")) {
+        kc.newCanvas({
+          width: width,
+          height: height
+        });
+        $('#newModal').modal('hide')
+      }
+    }
   });
 });
