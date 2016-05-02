@@ -102,6 +102,7 @@ var KeyCanvas = KeyCanvas || (function ($) {
 		// add code to check element type
 		objCanvas.attr("tabindex","1");
 
+		this.drawColor = {r:0,g:0,b:0,a:1};
 		this.dragging = false;
 		this.resizing = false;
 		this.selectedShape = null;
@@ -140,6 +141,11 @@ var KeyCanvas = KeyCanvas || (function ($) {
 		keyCanvas.prototype.setColor = function(color) {
 			this.drawColor = color;
 		};
+
+		function stringFromColor(c) {
+			return "rgba(" + c.r +"," + c.g + "," + c.b + "," + c.a + ")";
+		}
+		
 		
 		keyCanvas.prototype.getMouse = function(e) {
       var offsetX = 0, 
@@ -244,9 +250,9 @@ var KeyCanvas = KeyCanvas || (function ($) {
 			var mouse = this.getMouse(e);			
 			var width = 30;
 			var height = 30;
-			this.addShape(mouse.x - (width/2),mouse.y-(height/2),width,height); 
+			this.addShape(mouse.x - (width/2),mouse.y-(height/2),width,height,stringFromColor(this.drawColor),this.currentShapeType); 
 		},this));
-		
+			
 		objCanvas.on('mousemove',$.proxy(function(e) {
 			var mouse = this.getMouse(e);
 			if(this.dragging) {
@@ -349,9 +355,19 @@ var KeyCanvas = KeyCanvas || (function ($) {
 			selectionHandles.push(new Shape());	
 		}
 	}
-		
-	keyCanvas.prototype.addShape = function(left,top,width,height,fillColor) {
-		var shape = new Shape(left,top,width,height,this.drawColor,this.currentShapeType);
+	
+	keyCanvas.prototype.newCanvas = function(opts) {
+		shapes = [];
+		this.canvas.width=opts.width;
+		this.canvas.height=opts.height;
+		this.width = this.canvas.width;
+		this.height = this.canvas.height;
+		this.ghostCanvas.height=this.height;
+		this.ghostCanvas.width=this.width;
+	};
+	
+	keyCanvas.prototype.addShape = function(left,top,width,height,fillColor,shapeType) {
+		var shape = new Shape(left,top,width,height,fillColor,shapeType);
 		shapes.push(shape);
 		this.invalidate();
 	};

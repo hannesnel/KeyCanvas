@@ -1,21 +1,77 @@
 extends layout
 
+block additionalScripts
+  script(type='text/javascript', src='/js/libs/bootstrap-colorpicker.min.js')
+  
+  script(type='text/javascript', src='/js/keycanvas.js')
+  script(type='text/javascript', src='/js/main.js')
+
+  link(rel='stylesheet', href='/css/bootstrap-colorpicker.css')
+
 block content
-  div.btn-toolbar(role="toolbar")
-  div.btn-group(data-toggle="buttons")
-    label.btn.btn-primary(aria-label="Rectangle")
-      label.glyphicon.glyphicon-stop
-      input(type="radio",name="drawShape",id="shapeRectangle",autocomplete="off",checked="checked")
-    label.btn.btn-primary(aria-label="Circle")
-      label.glyphicon.glyphicon-record
-      input(type="radio",name="drawShape",id="shapeCircle",autocomplete="off")
-      
-  div.btn-group(data-toggle="buttons")
-    label.btn.btn-primary(aria-label="Green")
-      input(type="radio",name="drawColor",id="colorGreen",autocomplete="off",checked="checked")
-      | Green 
-    label.btn.btn-primary(aria-label="Blue")
-      input(type="radio",name="drawColor",id="colorBlue",autocomplete="off")
-      | Blue
-  div.canvasContainer.container
-    canvas#drawingSpace
+  span.canvasTitle
+    | KeyCanvas
+  div.canvasContainer.container.fill
+    div.canvasRow.navRow
+      div.btn-group.canvasToolbar(role="group", aria-label="File")
+        button.btn.btn-default(type="button",data-toggle="modal",data-target="#newModal")
+          | New 
+          span.glyphicon.glyphicon-file(aria-hidden="true")
+        button.btn.btn-default#canvasSave(type="button")
+          | Save 
+          span.glyphicon.glyphicon-floppy-disk(aria-hidden="true")
+        button.btn.btn-default(type="button",data-toggle="modal",data-target="#openModal")
+          | Open 
+          span.glyphicon.glyphicon-folder-open(aria-hidden="true")
+      div.btn-group.canvasToolbar(role="group", aria-label="Tools")
+        button.btn.btn-default.input-group#toolbarColor(type="button")
+          | Color 
+          span.colorPreview
+        div.btn-group(role="group")
+          button.btn.btn-default.dropdown-toggle(data-toggle="dropdown", type="button", aria-haspopup="true", aria-expanded="false")
+            | Shape 
+            span.caret
+          ul.dropdown-menu
+            li
+              a#drawRectancle(href="javascript:;")
+                | Rectangle
+            li
+              a#drawCircle(href="javascript:;")
+                | Circle
+    div.canvasRow
+      div.innerContainer
+        canvas#drawingSpace
+  
+  div#newModal.modal.fade(tabindex="-1",role="dialog",aria-labelledby="newModal")
+    div.modal-dialog.modal-sm
+      div.modal-content
+        div.modal-header
+          button.close(type="button", data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true")
+              |×
+          h4.modal-title
+            | New Design
+        div.modal-body
+          form
+            div.form-group
+              label.control-label(for="width")
+                | Width
+              input#width.form-control(type="text", placeholder="width", required="", autofocus="")
+            div.form-group
+              label.control-label(for="height")
+                | Height
+              input#height.form-control(type="text", placeholder="height", required="")
+            button#newCanvas.btn.btn-lg.btn-primary.btn-block(type="button")
+              | Create
+              
+  div#openModal.modal.fade(tabindex="-1",role="dialog",aria-labelledby="openModal")
+    div.modal-dialog.modal-sm
+      div.modal-content
+        div.modal-header
+          button.close(type="button", data-dismiss="modal", aria-label="Close")
+            span(aria-hidden="true")
+              |×
+          h4.modal-title
+            | Open Design
+        div.modal-body
+          
