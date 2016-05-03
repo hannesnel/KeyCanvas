@@ -53,7 +53,7 @@ function loadHandler() {
   app.use(passport.initialize());
   app.use(passport.session());
 
-  var routes = require('./routes/index')(passport, users, canvasDocuments);
+  var routes = require('./routes/routes')(passport, users, canvasDocuments);
 
   app.use(morgan('dev'));
   app.set('views', path.join(__dirname, 'views'));

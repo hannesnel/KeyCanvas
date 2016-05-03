@@ -38,8 +38,15 @@ module.exports = function(db) {
     done(null, nuser);
   }
   
+  function createUser(user, done) {
+    var newUser = users.insert(user);
+    db.saveDatabase();
+    done(newUser);
+  }
+  
   return {
     user: user,
-    getByEmail: getByEmail
+    getByEmail: getByEmail,
+    createUser: createUser
   };
 };

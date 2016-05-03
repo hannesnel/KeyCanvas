@@ -18,6 +18,16 @@ module.exports = function(passport, users, canvasDocuments) {
 		failureRedirect: '/login',
 		failureFlash : true
 	}));
+  
+  router.get('/register',function(req, res, next) {
+    res.render('register', {title: 'KeyCanvas', message: req.flash('message')});
+  });
+  
+  router.post('/register',passport.authenticate('local-register',{
+    successRedirect: '/login',
+		failureRedirect: '/register',
+		failureFlash : true
+  }))
 
   router.get('/login', function(req, res, next) {
     res.render('login', { title:'KeyCanvas', message: req.flash('message') });

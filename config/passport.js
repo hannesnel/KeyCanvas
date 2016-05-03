@@ -11,9 +11,29 @@ module.exports = function (passport, users) {
 		});
 	});
 
+  passport.use('local-register',new LocalStrategy({
+    usernameField: 'email',
+    passwordField:'password',
+    passReqToCallback: true
+  },function(req, email, password, done) {
+    users.getByEmail(email, function (err, user) {
+      if(err) {
+        done(err);
+      }
+      
+      if(user) {
+        return done(null, false, req.flash('message', 'A user with that email already exist'));
+      }
+      
+      users.createUser(new user.user(email,req.param('firstname'),req.param('lastname'),password),function(newUser) {
+        done(newUser,false);
+      });
+    });
+  }));
+
 	passport.use('local-login', new LocalStrategy({
-			usernameField : 'email',
-			passwordField : 'password',
+			usernameField: 'email',
+			passwordField: 'password',
       passReqToCallback: true
 		},
     function (req, email, password, done) {
@@ -26,7 +46,6 @@ module.exports = function (passport, users) {
           return done(null, false, req.flash('message', 'Incorrect username.'));
         }
 
-        console.log(user);
         if (!user.isValidPassword(password)) {
           return done(null, false, req.flash('message', 'Incorrect password.'));
         }

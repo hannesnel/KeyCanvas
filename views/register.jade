@@ -4,7 +4,7 @@ block additionalScripts
   link(rel="stylesheet", href="/css/login.css")
 
 block content
-  form.form-signin(action="/login",method="POST")
+  form.form-signin(action="/register",method="POST")
     span.canvasTitle
       | #{title}
     label.sr-only(for="inputEmail")
@@ -13,9 +13,12 @@ block content
     label.sr-only(for="inputPassword")
       | Password
     input#password.form-control(type="password", name="password", autocomplete="off", placeholder="Password", required="")
+    label.sr-only(for="inputPassword")
+      | Repeat password
+    input#repeatPassword.form-control(type="password", name="password", autocomplete="off", placeholder="Repeat Password", required="")
     button.btn.btn-primary(type="submit")
-      | Sign in
-    a.btn.btn-default(href="/register")
       | Register
+    a.btn.btn-default(href="/login")
+      | Cancel
     if(message)
       | #{message}
