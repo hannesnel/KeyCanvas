@@ -25,4 +25,4 @@ LokiJS is an in-memory database, I chose it because it has no other dependencies
 2. cd KeyCanvas
 3. npm install
 4. npm start
-5. register and log in
+5. register and log in or log in with painter@keycanvas.local (password: keycanvas)
