@@ -16,6 +16,8 @@
     "passport": "*",
     "passport-local": "*", 
     "express-session": "*",
-    "connect-flash" : "*"
+    "express-flash" : "*",
+    "morgan":"*",
+    "cookie-parser":"*"
   }
 }

@@ -21,7 +21,7 @@ block content
         button.btn.btn-default#canvasSave(type="button")
           | Save 
           span.glyphicon.glyphicon-floppy-disk(aria-hidden="true")
-        button.btn.btn-default(type="button",data-toggle="modal",data-target="#openModal")
+        button#btnOpenCanvas.btn.btn-default(type="button",data-toggle="modal",data-target="#openModal")
           | Open 
           span.glyphicon.glyphicon-folder-open(aria-hidden="true")
       div.btn-group.canvasToolbar(role="group", aria-label="Tools")
@@ -53,15 +53,18 @@ block content
           h4.modal-title
             | New Design
         div.modal-body
-          form
+          form#newDesignForm
             div.form-group
+              label.control-label(for="designName")
+                | Name
+              input#designName.form-control(type="text", placeholder="design name", required="", autofocus="")
               label.control-label(for="width")
                 | Width
-              input#width.form-control(type="text", placeholder="width", required="", autofocus="")
+              input#width.form-control(type="text", placeholder="width", required="", autofocus="", value="300")
             div.form-group
               label.control-label(for="height")
                 | Height
-              input#height.form-control(type="text", placeholder="height", required="")
+              input#height.form-control(type="text", placeholder="height", required="", value="200")
             button#newCanvas.btn.btn-lg.btn-primary.btn-block(type="button")
               | Create
               
@@ -76,28 +79,4 @@ block content
             | Open Design
         div.modal-body
           div.openModalBody
-            div.list-group
-              a.list-group-item(href="javascript:;")
-                | blegh blegh blegh blegh
-              a.list-group-item(href="javascript:;")
-                | blegh blegh blegh blegh
-              a.list-group-item(href="javascript:;")
-                | blegh blegh blegh blegh
-              a.list-group-item(href="javascript:;")
-                | blegh blegh blegh blegh
-              a.list-group-item(href="javascript:;")
-                | blegh blegh blegh blegh
-              a.list-group-item(href="javascript:;")
-                | blegh blegh blegh blegh
-              a.list-group-item(href="javascript:;")
-                | blegh blegh blegh blegh
-              a.list-group-item(href="javascript:;")
-                | blegh blegh blegh blegh
-              a.list-group-item(href="javascript:;")
-                | blegh blegh blegh blegh
-              a.list-group-item(href="javascript:;")
-                | blegh blegh blegh blegh
-              a.list-group-item(href="javascript:;")
-                | blegh blegh blegh blegh
-              a.list-group-item(href="javascript:;")
-                | blegh blegh blegh blegh
+            div#openCanvasList.list-group

@@ -98,10 +98,11 @@ var KeyCanvas = KeyCanvas || (function ($) {
 				
 		objCanvas = $(selector);
 		if(objCanvas.length===0)
-			throw "No matching canvas found";
+			throw 'No matching canvas found';
 		// add code to check element type
-		objCanvas.attr("tabindex","1");
-
+		objCanvas.attr('tabindex','1');
+    objCanvas.css('display', 'none');
+    this.name = null;
 		this.drawColor = {r:0,g:0,b:0,a:1};
 		this.dragging = false;
 		this.resizing = false;
@@ -144,7 +145,7 @@ var KeyCanvas = KeyCanvas || (function ($) {
 		};
 
 		function stringFromColor(c) {
-			return "rgba(" + c.r +"," + c.g + "," + c.b + "," + c.a + ")";
+			return 'rgba(' + c.r +',' + c.g + ',' + c.b + ',' + c.a + ')';
 		}
 		
 		
@@ -361,23 +362,59 @@ var KeyCanvas = KeyCanvas || (function ($) {
 	
 	keyCanvas.prototype.newCanvas = function(opts) {
 		shapes = [];
-		this.canvas.width=opts.width;
-		this.canvas.height=opts.height;
+    $(this.canvas).css('display','block');
+    this.name = opts.name;
+		this.canvas.width = opts.width;
+		this.canvas.height = opts.height;
 		this.width = this.canvas.width;
 		this.height = this.canvas.height;
-		this.ghostCanvas.height=this.height;
-		this.ghostCanvas.width=this.width;
+		this.ghostCanvas.height = this.height;
+		this.ghostCanvas.width = this.width;
 		this.isDirty = false;
 	};
 	
+  keyCanvas.prototype.loadCanvas = function(data) {
+    shapes = [];
+    $.each(data.design,function(index,shape) {
+      shapes.push(new Shape(parseInt(shape.left),parseInt(shape.top), parseInt(shape.width),parseInt(shape.height),shape.fillColor,parseInt(shape.shapeType)));
+    });
+    $(this.canvas).css('display','block');
+    this.name = data.name;
+		this.canvas.width = data.width;
+		this.canvas.height = data.height;
+		this.width = this.canvas.width;
+		this.height = this.canvas.height;
+		this.ghostCanvas.height = this.height;
+		this.ghostCanvas.width = this.width;
+		this.isDirty = false;
+    this.invalidate();
+  };
+  
 	keyCanvas.prototype.getCanvas = function() {
+    var saveSafeShapes = [];
+    for(var i=0;i<shapes.length;i++) {
+      var shape=shapes[i];
+      saveSafeShapes.push({
+        left: shape.left,
+        top: shape.top,
+        width: shape.width,
+        height: shape.height,
+        fillColor: shape.fillColor,
+        shapeType: shape.shapeType
+      });
+    }
 		return {
+      name: this.name,
 			width: this.width,
 			height: this.height,
-			design: shapes
+			design: saveSafeShapes
 		};
 	};
 	
+  keyCanvas.prototype.setSaved = function() {
+    this.isDirty = false;
+  };
+  
 	keyCanvas.prototype.addShape = function(left,top,width,height,fillColor,shapeType) {
 		var shape = new Shape(left,top,width,height,fillColor,shapeType);
 		this.isDirty = true;

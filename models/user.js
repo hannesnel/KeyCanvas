@@ -3,38 +3,39 @@ var bcrypt = require('bcrypt');
 var salt = bcrypt.genSaltSync(8);
 
 module.exports = function(db) {
-  
-  var users = db.getCollection("user");
-  
-  function user(email, firstname, lastname, password) {
+  var users = db.getCollection('user');
+
+  function user(email, firstname, lastname, clearPassword) {
     this.email = email;
     this.firstname = firstname;
     this.lastname = lastname;
-    if(password && password.length>0) {
-      this.hash = encryptPassword(password);
+    if(clearPassword && clearPassword.length>0) {
+      this.hash = encryptPassword(clearPassword);
     }
     else {
       this.hash = null;
     }
   }
   
-  user.prototype.isValidPassword = function(password) {
-    return bcrypt.compareSync(password,this.hash);
+  user.prototype.setHash = function(hash) {
+    this.hash = hash;
+  };
+  
+  user.prototype.isValidPassword = function(clearPassword) {
+    return bcrypt.compareSync(clearPassword, this.hash);
   };
     
-  function encryptPassword(passowrd) {
-    var hash = bcrypt.hashSync(passowrd, salt);
+  function encryptPassword(clearPassword) {
+    var hash = bcrypt.hashSync(clearPassword, salt);
     return hash;
   }
   
   function getByEmail(email, done) {
-    var user = users.by('email',email);
-    if(user==null) {
-      done('user not found', null);
-    }
-    else {
-      done(null, user);
-    }
+    var auser = users.findOne({'email': email});
+    
+    var nuser = new user(auser.email, auser.firstname, auser.lastname);
+    nuser.setHash(auser.hash);
+    done(null, nuser);
   }
   
   return {
