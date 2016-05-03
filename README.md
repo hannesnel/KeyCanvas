@@ -20,8 +20,8 @@ LokiJS is an in-memory database, I chose it because it has no other dependencies
 - New design name and dimensions are immutable
 
 ## Usage
-1 Clone repo
-2 cd KeyCanvas
-3 npm install
-4 npm start
-5 register and log in
+1. Clone repo
+2. cd KeyCanvas
+3. npm install
+4. npm start
+5. register and log in
