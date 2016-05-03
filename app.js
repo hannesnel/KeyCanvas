@@ -19,7 +19,6 @@ var db = new loki('keycanvas.json', {
 });
 
 function loadHandler() {
-  console.log('handler');
   userCollection = db.getCollection('user');
   canvasCollection = db.getCollection('canvasDocument');
   if (userCollection == null) {
