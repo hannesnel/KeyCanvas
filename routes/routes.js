@@ -20,17 +20,17 @@ module.exports = function(passport, users, canvasDocuments) {
 	}));
   
   router.get('/register',function(req, res, next) {
-    res.render('register', {title: 'KeyCanvas', message: req.flash('message')});
+    res.render('register', {title: 'KeyCanvas Register', message: req.flash('message')});
   });
   
-  router.post('/register',passport.authenticate('local-register',{
+  router.post('/register', passport.authenticate('local-register', {
     successRedirect: '/login',
 		failureRedirect: '/register',
 		failureFlash : true
   }))
 
   router.get('/login', function(req, res, next) {
-    res.render('login', { title:'KeyCanvas', message: req.flash('message') });
+    res.render('login', { title:'KeyCanvas Login', message: req.flash('message') });
   });
 
   router.get('/getCanvasDocuments', isAuthenticated, function(req, res, next) {

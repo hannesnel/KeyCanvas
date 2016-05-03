@@ -18,6 +18,7 @@ LokiJS is an in-memory database, I chose it because it has no other dependencies
 - No debounce (script wrongfully detects multiple clicks as double-clicks)
 - Using LokiJS as a store for the 'documents' and user profiles, the db is human readable although passwords are encrypted using bcrypt
 - New design name and dimensions are immutable
+- Firefox - canvas.ellipse not supported (use chrome)
 
 ## Usage
 1. Clone repo

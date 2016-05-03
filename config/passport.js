@@ -15,18 +15,24 @@ module.exports = function (passport, users) {
     usernameField: 'email',
     passwordField:'password',
     passReqToCallback: true
-  },function(req, email, password, done) {
-    users.getByEmail(email, function (err, user) {
-      if(err) {
-        done(err);
-      }
-      
-      if(user) {
-        return done(null, false, req.flash('message', 'A user with that email already exist'));
-      }
-      
-      users.createUser(new user.user(email,req.param('firstname'),req.param('lastname'),password),function(newUser) {
-        done(newUser,false);
+  }, function(req, email, password, done) {
+    process.nextTick(function() {
+      users.getByEmail(email, function (err, user) {
+        if(err) {
+          done(err);
+        }
+        
+        if(user) {
+          return done(null, false, req.flash('message', 'A user with that email already exist'));
+        }
+        console.log(req.body);
+        if(password!=req.body.repeatPassword) {
+          return done(null, false, req.flash('message','Passwords do not match'));
+        }
+        
+        users.createUser(new users.user(email,req.body.firstname,req.body.lastname,password),function(newUser) {
+          done(null,newUser);
+        });
       });
     });
   }));

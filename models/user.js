@@ -31,8 +31,10 @@ module.exports = function(db) {
   }
   
   function getByEmail(email, done) {
+    console.log('getByEmail');
     var auser = users.findOne({'email': email});
-    
+    if(auser == null)
+      return done(null, null);
     var nuser = new user(auser.email, auser.firstname, auser.lastname);
     nuser.setHash(auser.hash);
     done(null, nuser);
