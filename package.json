@@ -12,7 +12,7 @@
     "jade": "~1.11.0",
     "serve-favicon": "~2.3.0",
     "lokijs": "*",
-    "bcrypt": "*",
+    "bcryptjs": "*",
     "passport": "*",
     "passport-local": "*", 
     "express-session": "*",
