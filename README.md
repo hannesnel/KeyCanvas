@@ -7,7 +7,7 @@ LokiJS is an in-memory database, I chose it because it has no other dependencies
 
 
 ## Dependencies
-- bcrypt (encryption)
+- bcryptjs (encryption - windows friendly version of bcrypt, same, but without the dependencies)
 - jade (template engine)
 - express (web framework)
 - lokijs (lightweight and high perfomance in memory database)
